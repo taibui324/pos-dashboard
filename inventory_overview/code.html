@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Daspace - Inventory Overview</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-tint": "#565e74",
+                        "on-secondary-container": "#fefcff",
+                        "secondary-fixed": "#d8e2ff",
+                        "on-tertiary-fixed": "#271901",
+                        "on-primary-fixed": "#131b2e",
+                        "outline": "#76777d",
+                        "error-container": "#ffdad6",
+                        "outline-variant": "#c6c6cd",
+                        "on-tertiary-fixed-variant": "#574425",
+                        "primary-fixed": "#dae2fd",
+                        "primary": "#000000",
+                        "secondary-fixed-dim": "#adc6ff",
+                        "on-tertiary-container": "#98805d",
+                        "surface-variant": "#e4e2e4",
+                        "secondary-container": "#2170e4",
+                        "surface-bright": "#fcf8fa",
+                        "surface-dim": "#dcd9db",
+                        "on-error-container": "#93000a",
+                        "secondary": "#0058be",
+                        "tertiary": "#000000",
+                        "on-background": "#1b1b1d",
+                        "inverse-surface": "#303032",
+                        "on-error": "#ffffff",
+                        "surface-container-low": "#f6f3f5",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-fixed-variant": "#004395",
+                        "tertiary-fixed-dim": "#dec29a",
+                        "on-primary": "#ffffff",
+                        "on-secondary-fixed": "#001a42",
+                        "inverse-primary": "#bec6e0",
+                        "primary-fixed-dim": "#bec6e0",
+                        "on-surface": "#1b1b1d",
+                        "primary-container": "#131b2e",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-high": "#eae7e9",
+                        "background": "#fcf8fa",
+                        "tertiary-fixed": "#fcdeb5",
+                        "surface-container": "#f0edef",
+                        "tertiary-container": "#271901",
+                        "surface-container-highest": "#e4e2e4",
+                        "error": "#ba1a1a",
+                        "on-surface-variant": "#45464d",
+                        "surface": "#fcf8fa",
+                        "on-primary-container": "#7c839b",
+                        "inverse-on-surface": "#f3f0f2",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed-variant": "#3f465c"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "margin-page": "32px",
+                        "gutter": "24px",
+                        "stack-sm": "8px",
+                        "unit": "4px",
+                        "card-padding": "20px",
+                        "stack-md": "16px"
+                    },
+                    "fontFamily": {
+                        "body-base": ["Inter"],
+                        "headline-md": ["Manrope"],
+                        "display-lg": ["Manrope"],
+                        "body-sm": ["Inter"],
+                        "data-tabular": ["Inter"],
+                        "label-caps": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-base": ["14px", {"lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400"}],
+                        "headline-md": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "display-lg": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-sm": ["13px", {"lineHeight": "18px", "letterSpacing": "0em", "fontWeight": "400"}],
+                        "data-tabular": ["14px", {"lineHeight": "20px", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+                        "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-tab {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+</head>
+<body class="bg-background font-body-base text-on-surface">
+<!-- SideNavBar (Shared Component) -->
+<aside class="fixed left-0 top-0 h-full w-[240px] bg-slate-900 flex flex-col h-full py-6 border-r border-slate-800 shadow-xl z-50">
+<div class="px-6 mb-10 flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-blue-500 flex items-center justify-center">
+<span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">terminal</span>
+</div>
+<div>
+<h1 class="text-lg font-black tracking-tight text-white leading-none">Daspace</h1>
+<p class="text-[10px] text-slate-400 uppercase tracking-widest font-bold mt-1">POS Terminal</p>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-slate-200 hover:bg-white/5 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span class="font-manrope text-sm antialiased">Revenue</span>
+</a>
+<!-- Active State for Inventory -->
+<a class="flex items-center gap-3 px-4 py-3 text-white bg-white/10 border-l-4 border-blue-500 transition-all duration-200" href="#">
+<span class="material-symbols-outlined active-tab" data-icon="inventory_2">inventory_2</span>
+<span class="font-manrope text-sm antialiased">Inventory</span>
+</a>
+</nav>
+<div class="mt-auto pt-6 border-t border-slate-800">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-slate-200 hover:bg-white/5 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-manrope text-sm antialiased">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-slate-200 hover:bg-white/5 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="font-manrope text-sm antialiased">Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Wrapper -->
+<main class="ml-[240px] min-h-screen flex flex-col">
+<!-- TopAppBar (Shared Component) -->
+<header class="sticky top-0 z-40 bg-white border-b border-slate-200 px-6 py-3 flex justify-between items-center w-full">
+<div class="flex items-center gap-4">
+<h2 class="font-manrope text-xl font-bold text-slate-900">Inventory Overview</h2>
+<div class="h-4 w-px bg-slate-200"></div>
+<span class="text-slate-500 font-manrope text-sm font-medium">Data updated: 24/05/2024 - 14:30</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
+<input class="bg-slate-50 border-none rounded-full pl-10 pr-4 py-1.5 text-sm w-64 focus:ring-2 focus:ring-secondary/20 transition-all" placeholder="Search..." type="text"/>
+</div>
+<button class="p-2 text-slate-500 hover:bg-slate-50 rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="refresh">refresh</span>
+</button>
+<button class="p-2 text-slate-500 hover:bg-slate-50 rounded-full transition-colors relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full border-2 border-white"></span>
+</button>
+<img alt="User profile photo" class="w-8 h-8 rounded-full border border-slate-200" data-alt="A professional headshot of a business executive in a modern office setting. The lighting is soft and natural, emphasizing a clean and corporate look that matches a light-mode dashboard aesthetic. The background is a slightly blurred architectural interior with glass and steel elements, maintaining a minimalist and professional atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAiDCEuBHh1EdglW8ErEbsf0UAQrOsykNDAMii-UT8dkhYmQ50n7VQEHVGpsbW8RNxm_w5mui1nNXrS6Libli39-kSl4Uj-5J_Hfz2m8gyf4BEhXLF4i-A0Sp1KsLipdFZNCBpXLNI9v7wUrnhdYcKKXEGsSKWN2fT7MS6xCdYT1z9pOpfVqPArdQJRlb0oU_5MSkeXU7arv-UT4oN1Va6AXGL3X8Us-0_5jR_OM7r_co-CBnTz71K01PXLzQwq-Nrn0T9mLqH6Ie8"/>
+</div>
+</header>
+<!-- Page Content -->
+<div class="p-margin-page space-y-gutter">
+<!-- KPI Section -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- KPI: Total Products -->
+<div class="bg-white p-card-padding rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+<div>
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider block mb-2">Total Product in Inventory</span>
+<h3 class="font-display-lg text-display-lg text-on-surface">1,284</h3>
+</div>
+<div class="mt-4 flex items-center gap-2 text-green-600 font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'wght' 700;">trending_up</span>
+<span>+12.5% from last month</span>
+</div>
+</div>
+<!-- KPI: Low Stock -->
+<div class="bg-white p-card-padding rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+<div>
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider block mb-2">Low Stock Products</span>
+<h3 class="font-display-lg text-display-lg text-on-surface">42</h3>
+<p class="text-slate-400 text-xs mt-1">Available Stock &lt; 10</p>
+</div>
+<div class="mt-4 flex items-center gap-2 text-amber-600 font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-sm">warning</span>
+<span>Attention required</span>
+</div>
+</div>
+<!-- KPI: Out of Stock -->
+<div class="bg-white p-card-padding rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between border-l-4 border-l-error">
+<div>
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider block mb-2">Out-of-Stock Products</span>
+<h3 class="font-display-lg text-display-lg text-error">18</h3>
+<p class="text-slate-400 text-xs mt-1">Available Stock = 0</p>
+</div>
+<div class="mt-4 flex items-center gap-2 text-error font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-sm">error</span>
+<span>Immediate action needed</span>
+</div>
+</div>
+</div>
+<!-- Filter Section -->
+<div class="bg-white rounded-xl border border-slate-200 shadow-sm p-4">
+<div class="flex flex-wrap items-center gap-4">
+<!-- Search -->
+<div class="flex-1 min-w-[240px] relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-body-base font-body-base focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all outline-none" placeholder="Search by Product name, SKU..." type="text"/>
+</div>
+<!-- Category Filter -->
+<div class="w-48 relative">
+<select class="w-full pl-3 pr-10 py-2 bg-white border border-slate-200 rounded-lg text-body-sm font-body-sm appearance-none focus:ring-2 focus:ring-secondary/20 focus:border-secondary">
+<option value="">Loại sản phẩm</option>
+<option value="electronics">Electronics</option>
+<option value="fashion">Fashion</option>
+<option value="f&amp;b">Food &amp; Beverage</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">expand_more</span>
+</div>
+<!-- Date Filter -->
+<div class="w-48 relative">
+<input class="w-full pl-10 pr-4 py-2 bg-white border border-slate-200 rounded-lg text-body-sm font-body-sm focus:ring-2 focus:ring-secondary/20 focus:border-secondary" placeholder="Ngày khởi tạo" type="text"/>
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">calendar_today</span>
+</div>
+<!-- Sort -->
+<div class="w-40 relative">
+<select class="w-full pl-3 pr-10 py-2 bg-white border border-slate-200 rounded-lg text-body-sm font-body-sm appearance-none focus:ring-2 focus:ring-secondary/20 focus:border-secondary">
+<option value="newest">Newest first</option>
+<option value="stock-asc">Stock: Low to High</option>
+<option value="stock-desc">Stock: High to Low</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">sort</span>
+</div>
+<!-- Actions -->
+<div class="flex items-center gap-2 ml-auto">
+<button class="px-4 py-2 text-on-surface-variant font-body-sm hover:bg-slate-50 transition-colors rounded-lg flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">filter_alt_off</span>
+                            Clear Filter
+                        </button>
+<button class="px-4 py-2 bg-secondary text-white font-body-sm rounded-lg hover:bg-secondary/90 transition-all flex items-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-sm">download</span>
+                            Export
+                        </button>
+</div>
+</div>
+</div>
+<!-- Table Section -->
+<div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-50 border-b border-slate-200">
+<th class="px-6 py-4 font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Mã SKU Sản Phẩm</th>
+<th class="px-6 py-4 font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Mã Barcode</th>
+<th class="px-6 py-4 font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Tên Sản Phẩm</th>
+<th class="px-6 py-4 font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Loại Sản Phẩm</th>
+<th class="px-6 py-4 font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Nhãn Hiệu</th>
+<th class="px-6 py-4 font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Tồn Kho</th>
+<th class="px-6 py-4 font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Ngày Khởi Tạo</th>
+<th class="px-6 py-4"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 font-data-tabular text-data-tabular">
+<!-- Out of Stock Row -->
+<tr class="hover:bg-slate-50 transition-colors">
+<td class="px-6 py-4 text-slate-900 font-medium">SKU-9021-X</td>
+<td class="px-6 py-4 text-slate-500">893012345678</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-slate-100 overflow-hidden flex-shrink-0">
+<img alt="Product thumbnail" data-alt="A clean, high-key studio photograph of a vibrant red athletic shoe against a minimalist white background. The lighting is crisp and even, suitable for an e-commerce inventory interface. The style is professional, highlighting the product's details and textures within a corporate dashboard color palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpcU_qQFUF_0vEm-JEd-me6j0b60NKkNVGSlEs1YIxcGAESm6jgLpVnUxT08umhwudohLPKnptT5HJwalsYrj-DuP6QrdKDmct_qIROzer6swSn-ExiMCEPCI6UuDGw6W7zZQgRXmwjn3tS7aO4cKwSwflGIYq0fAi4n0E2FeBo2U4WVOu2nG5Vg3v5cIf3hwCLlypRPktFDlNItxmYqoi1NvpdH43FlzG9dPAdZB1I-sJr_oaBVH0l0i4Tni4-iQywSgsF8uk7hb3"/>
+</div>
+<span class="font-medium text-slate-900">Nike Air Max Pro</span>
+</div>
+</td>
+<td class="px-6 py-4 text-slate-600">Footwear</td>
+<td class="px-6 py-4 text-slate-600">Nike</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-error-container text-on-error-container">
+                                        0
+                                    </span>
+</td>
+<td class="px-6 py-4 text-slate-500">12/04/2024</td>
+<td class="px-6 py-4 text-right">
+<button class="p-1 hover:bg-slate-200 rounded transition-colors text-slate-400">
+<span class="material-symbols-outlined text-lg">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Low Stock Row -->
+<tr class="hover:bg-slate-50 transition-colors">
+<td class="px-6 py-4 text-slate-900 font-medium">SKU-4412-M</td>
+<td class="px-6 py-4 text-slate-500">893012341122</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-slate-100 overflow-hidden flex-shrink-0">
+<img alt="Product thumbnail" data-alt="A minimalist studio product shot of a sleek, white digital watch with a clean interface. The lighting is soft and high-key, creating a modern, professional look for a retail management system. The composition is centered, emphasizing the product's high-tech aesthetic and clean lines." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDtmkgvyzbApx1uvlEneMQCbQjRrHtJsjv55hf8edMCIWu5NVMfCAJL1ibfjFDJsjAuyN-ET2IEME93tuF-8IhnUkpawLXJ0qw6431k6YcGLucWYtOlN50DTIWR0IFsbC8w_kfncHL4r9kJ-VruAGKSTsV-2wk7W5LBS7nalOk1SL3EO_EKyI6V6vjz5rrPIqXpHoML3ePy86oef8hOiACvHbpv0YQNAoUd_MKEQk_1Xt4guc-zFqn8TM9Htltq4fmalM3pQ9Q0LgAT"/>
+</div>
+<span class="font-medium text-slate-900">SmartWatch Series 5</span>
+</div>
+</td>
+<td class="px-6 py-4 text-slate-600">Electronics</td>
+<td class="px-6 py-4 text-slate-600">Apple</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-800">
+                                        8
+                                    </span>
+</td>
+<td class="px-6 py-4 text-slate-500">15/05/2024</td>
+<td class="px-6 py-4 text-right">
+<button class="p-1 hover:bg-slate-200 rounded transition-colors text-slate-400">
+<span class="material-symbols-outlined text-lg">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Normal Stock Row -->
+<tr class="hover:bg-slate-50 transition-colors">
+<td class="px-6 py-4 text-slate-900 font-medium">SKU-8821-B</td>
+<td class="px-6 py-4 text-slate-500">893012349933</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-slate-100 overflow-hidden flex-shrink-0">
+<img alt="Product thumbnail" data-alt="Professional studio photography of high-quality noise-canceling headphones in a matte black finish. The background is a soft, graduated gray, highlighting the premium texture of the product. The overall mood is sophisticated and technical, reflecting the high-velocity utility of the dashboard brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFfUGLis-USb-MS3MJvHn1eUSoGl-WACvCkHuEhzsxWCCadta2O_qlHhusE48qLDw4LGRM0DQYTWYMm7UPqzB2M4Iar24bUscQJTnPGb22wetV3XDu0K1yPfFZwd8VGmnixyL1JtvPRgfIoSJty17NBECZs9IxcYtEZT-AjbLK-hwq9bgHL9cuGU-8bVfgwmXIv0kLTM_pKtQrqXxIuZWZZBSI2WpdfqTaPbsUaPfNgyBZcVIBivNL9TB95n1MvvXh2CR9PvlE3pfe"/>
+</div>
+<span class="font-medium text-slate-900">Wireless Headphones Pro</span>
+</div>
+</td>
+<td class="px-6 py-4 text-slate-600">Audio</td>
+<td class="px-6 py-4 text-slate-600">Sony</td>
+<td class="px-6 py-4 text-slate-900">142</td>
+<td class="px-6 py-4 text-slate-500">20/05/2024</td>
+<td class="px-6 py-4 text-right">
+<button class="p-1 hover:bg-slate-200 rounded transition-colors text-slate-400">
+<span class="material-symbols-outlined text-lg">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Another Normal Stock Row -->
+<tr class="hover:bg-slate-50 transition-colors">
+<td class="px-6 py-4 text-slate-900 font-medium">SKU-1029-A</td>
+<td class="px-6 py-4 text-slate-500">893012340011</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-slate-100 overflow-hidden flex-shrink-0">
+<img alt="Product thumbnail" data-alt="A clean product shot of high-quality leather sneakers on a minimal surface. The lighting is professional, highlighting the craftsmanship and materials. The image serves as a clear visual anchor for the inventory list, maintaining the dashboard's quiet intelligence and modern minimalism aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDA18JsFCnLsa1R_81BLWZLaOTZt0pk2AcvPu7wPjrvQfCKjIsMdcKg7HK9xfWvPU7HtDq-YUR-kDZt2TJrT5T66YwBPb0B4p-e2wqERdXZF0LjFWqITlW08gEycWVV76EFwW7CzdXpI9MGfaZteqwnNnBVxm5lZpLp6wNlM0kSPH5atnJ3BRklR4lVsBICkxtKgJuxCpKahfA7Uruif9dIbrJujWe0nFXWm6xcZou-tmbEZ9kvj5LLfzrpUaag_70M0Ux19JUe1CLL"/>
+</div>
+<span class="font-medium text-slate-900">Classic Leather Sneakers</span>
+</div>
+</td>
+<td class="px-6 py-4 text-slate-600">Footwear</td>
+<td class="px-6 py-4 text-slate-600">Adidas</td>
+<td class="px-6 py-4 text-slate-900">45</td>
+<td class="px-6 py-4 text-slate-500">22/05/2024</td>
+<td class="px-6 py-4 text-right">
+<button class="p-1 hover:bg-slate-200 rounded transition-colors text-slate-400">
+<span class="material-symbols-outlined text-lg">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="px-6 py-4 border-t border-slate-100 flex items-center justify-between bg-slate-50/50">
+<span class="text-body-sm text-slate-500">Showing 1-10 of 1,284 products</span>
+<div class="flex items-center gap-2">
+<button class="p-2 border border-slate-200 rounded hover:bg-white transition-colors disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined text-lg">chevron_left</span>
+</button>
+<button class="w-8 h-8 rounded bg-secondary text-white text-body-sm font-bold shadow-sm">1</button>
+<button class="w-8 h-8 rounded border border-slate-200 bg-white text-slate-600 text-body-sm hover:bg-slate-50 transition-colors">2</button>
+<button class="w-8 h-8 rounded border border-slate-200 bg-white text-slate-600 text-body-sm hover:bg-slate-50 transition-colors">3</button>
+<span class="text-slate-400 px-1">...</span>
+<button class="w-8 h-8 rounded border border-slate-200 bg-white text-slate-600 text-body-sm hover:bg-slate-50 transition-colors">129</button>
+<button class="p-2 border border-slate-200 rounded hover:bg-white transition-colors">
+<span class="material-symbols-outlined text-lg">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Additional Dashboard Real Estate (Bento-style secondary info) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<div class="bg-white p-card-padding rounded-xl border border-slate-200 shadow-sm">
+<div class="flex items-center justify-between mb-6">
+<h4 class="font-headline-md text-headline-md text-on-surface">Top Categories by Stock</h4>
+<button class="text-secondary text-body-sm font-medium hover:underline">View Report</button>
+</div>
+<div class="space-y-4">
+<div class="space-y-1">
+<div class="flex justify-between text-body-sm">
+<span class="text-slate-600">Electronics</span>
+<span class="font-bold">452 items</span>
+</div>
+<div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 65%;"></div>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between text-body-sm">
+<span class="text-slate-600">Footwear</span>
+<span class="font-bold">310 items</span>
+</div>
+<div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 45%;"></div>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between text-body-sm">
+<span class="text-slate-600">Accessories</span>
+<span class="font-bold">215 items</span>
+</div>
+<div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 32%;"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-slate-900 p-card-padding rounded-xl border border-slate-800 shadow-lg text-white">
+<div class="flex items-center gap-4 mb-4">
+<div class="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-blue-400">info</span>
+</div>
+<div>
+<h4 class="font-headline-md text-headline-md">Inventory Insights</h4>
+<p class="text-slate-400 text-body-sm">Powered by Daspace AI</p>
+</div>
+</div>
+<p class="text-slate-300 text-body-base leading-relaxed mb-6">
+                        Stock levels for <span class="text-white font-bold">Nike Air Max Pro</span> have reached zero 15% faster than last month. We recommend restocking 50 units by next Monday to meet predicted demand.
+                    </p>
+<button class="w-full py-3 bg-white text-slate-900 font-bold rounded-lg hover:bg-slate-100 transition-colors flex items-center justify-center gap-2">
+                        Generate Restock Order
+                    </button>
+</div>
+</div>
+</div>
+</main>
+<!-- Contextual FAB (Hidden on Table details as per rules, but showing for main inventory action) -->
+<button class="fixed bottom-8 right-8 w-14 h-14 bg-secondary text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-105 transition-transform group">
+<span class="material-symbols-outlined" style="font-variation-settings: 'wght' 600;">add</span>
+<span class="absolute right-full mr-4 bg-slate-900 text-white text-xs px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">Add New Product</span>
+</button>
+</body></html>
