@@ -26,7 +26,6 @@ import {
   ShoppingCart,
   SlidersHorizontal,
   TrendingUp,
-  UserRound,
   Users
 } from "lucide-react";
 import {
@@ -83,6 +82,10 @@ function StatusChip({ status }: { status: string }) {
       {status}
     </span>
   );
+}
+
+function downloadCsv(path: string) {
+  window.location.href = path;
 }
 
 function Pagination({ totalLabel }: { totalLabel: string }) {
@@ -355,7 +358,7 @@ function RevenuePage() {
         <SelectControl label="Filter: Chi Nhánh" value="Tất cả chi nhánh" />
         <div className="ml-auto flex gap-2">
           <GhostButton icon={<FilterX size={18} />} label="Clear Filter" />
-          <PrimaryButton icon={<Download size={18} />} label="Export" />
+          <PrimaryButton icon={<Download size={18} />} label="Export" onClick={() => downloadCsv("/api/exports/revenue")} />
         </div>
       </section>
       <section className="grid grid-cols-1 gap-gutter md:grid-cols-3">
@@ -446,7 +449,7 @@ function InventoryPage() {
           <SelectBox label="Newest first" icon={<SlidersHorizontal size={18} />} />
           <div className="ml-auto flex gap-2">
             <GhostButton icon={<FilterX size={18} />} label="Clear Filter" />
-            <PrimaryButton icon={<Download size={18} />} label="Export" />
+            <PrimaryButton icon={<Download size={18} />} label="Export" onClick={() => downloadCsv("/api/exports/inventory")} />
           </div>
         </div>
       </section>
@@ -560,7 +563,7 @@ function UserManagementPage() {
           <span className="rounded border border-slate-300 bg-slate-100 px-3 py-1 text-label-caps text-slate-700">450 Total</span>
         </div>
         <div className="flex gap-3">
-          <GhostButton icon={<Download size={18} />} label="Export" />
+          <GhostButton icon={<Download size={18} />} label="Export" onClick={() => downloadCsv("/api/exports/users")} />
           <PrimaryButton icon={<Plus size={18} />} label="Create User" onClick={() => setShowCreate(true)} />
         </div>
       </section>
@@ -628,12 +631,48 @@ function CreateUserModal({ onClose, onCreate }: { onClose: () => void; onCreate:
   const [name, setName] = useState("New Brand User");
   const [email, setEmail] = useState("new.brand@example.com");
   const [brand, setBrand] = useState("Acme Corp");
+  const [error, setError] = useState("");
+  const [saving, setSaving] = useState(false);
+
+  async function submit() {
+    setSaving(true);
+    setError("");
+
+    const response = await fetch("/api/admin/brand-users", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json"
+      },
+      body: JSON.stringify({
+        displayName: name,
+        email,
+        brandId: brand.toLowerCase().replaceAll(" ", "-")
+      })
+    });
+
+    if (!response.ok && response.status !== 501) {
+      const payload = await response.json().catch(() => ({ error: "Could not create user." }));
+      setError(payload.error ?? "Could not create user.");
+      setSaving(false);
+      return;
+    }
+
+    onCreate({
+      name,
+      email,
+      brand,
+      role: "Brand User",
+      lastActive: "Invited",
+      status: "Invited"
+    });
+    setSaving(false);
+  }
 
   return (
     <div className="fixed inset-0 z-[80] flex items-center justify-center bg-slate-950/40 px-4">
       <div className="w-full max-w-lg rounded-xl bg-white p-6 shadow-2xl">
         <h3 className="font-manrope text-headline-md text-slate-950">Create Brand User</h3>
-        <p className="mt-1 text-body-sm text-slate-500">Mock account creation. No Supabase API call is made in this UI preview.</p>
+        <p className="mt-1 text-body-sm text-slate-500">Creates a preview invite locally unless Supabase admin credentials are configured.</p>
         <div className="mt-6 space-y-4">
           <TextField label="Display name" onChange={setName} value={name} />
           <TextField label="Email" onChange={setEmail} value={email} />
@@ -643,19 +682,11 @@ function CreateUserModal({ onClose, onCreate }: { onClose: () => void; onCreate:
           <GhostButton label="Cancel" onClick={onClose} />
           <PrimaryButton
             icon={<Plus size={18} />}
-            label="Create User"
-            onClick={() =>
-              onCreate({
-                name,
-                email,
-                brand,
-                role: "Brand User",
-                lastActive: "Invited",
-                status: "Invited"
-              })
-            }
+            label={saving ? "Creating..." : "Create User"}
+            onClick={() => void submit()}
           />
         </div>
+        {error ? <p className="mt-3 text-body-sm text-rose-600">{error}</p> : null}
       </div>
     </div>
   );
